@@ -18,7 +18,7 @@ Create a new Google Sheet.
 
 Create a new script in your newly created Google Sheet and paste the contents of the files `Code.gs`, `Dates.gs` and `Toggl.gs` in their respective script files.
 
-Edit `Toggl.gs` to fill in your *workspace_id* and *api_token*.
+Edit "config" sheet to fill in your *workspace_id* and *api_token*.
 
 To figure out your *workspace_id*: go to Team in toggl.com. The number at the end of the URL is the workspace id.
 
