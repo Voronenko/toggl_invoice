@@ -4,11 +4,12 @@ var SHT_CONFIG = 'Config';
 function onOpen() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var menuEntries = [ 
-     {name: "Get Invoice for Range", functionName: "range_invoice"},    
      {name: "Get Invoice for Month", functionName: "month_invoice"},
+     {name: "Get Invoice for Range", functionName: "range_invoice"},    
      {name: "-----Configure:-----", functionName: "do_nothing"},        
      {name: "Load Projects Data", functionName: "load_projects"},
      {name: "Set time interval - yesterday", functionName: "set_interval_1_days_exclusive"},
+     {name: "Set time interval - this week", functionName: "set_interval_this_week_exclusive"},    
      {name: "Set time interval - last week", functionName: "set_interval_previous_week_exclusive"},    
      {name: "Set time interval - last 7 days incl.", functionName: "set_interval_7_days_inclusive"},
      {name: "Set time interval - last 14 days incl.", functionName: "set_interval_14_days_inclusive"},
@@ -84,7 +85,19 @@ function set_interval_previous_week_exclusive() {
 
   sheet.getRange(2, 2).setValue(Utilities.formatDate(startDate, timeZone, 'dd/MM/yyyy'));
   sheet.getRange(3, 2).setValue(Utilities.formatDate(endDate, timeZone, 'dd/MM/yyyy'));
-}    
+}
+
+function set_interval_this_week_exclusive() {  
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHT_CONFIG);
+  var timeZone = Session.getScriptTimeZone();    
+    
+  var today=new Date();
+  var startDate=getMonday(today);
+  var endDate = new Date(startDate.getTime()+6*(24*3600*1000));
+
+  sheet.getRange(2, 2).setValue(Utilities.formatDate(startDate, timeZone, 'dd/MM/yyyy'));
+  sheet.getRange(3, 2).setValue(Utilities.formatDate(endDate, timeZone, 'dd/MM/yyyy'));
+}      
     
 // Generate time sheet for month
 function month_invoice() {
