@@ -10,7 +10,16 @@ Report can be filtered by project, and drop ignored tags (like pomidoro-break, o
 
 ### Simple
 
-Open [this Google Sheet](https://docs.google.com/spreadsheets/d/1lSqnC6dxMgknevUSmaINxam6LgNHvpkVPkXs8PBalQk/edit?usp=sharing ) and make a copy in your Google Drive account.
+Open [this Google Sheet](https://docs.google.com/spreadsheets/d/19yda-N69KBc4EvxGnFQItDg0Y_cS7ZDg4Iq0WPfw4g8/edit?usp=sharing) and make a copy in your Google Drive account.
+
+https://docs.google.com/spreadsheets/d/19yda-N69KBc4EvxGnFQItDg0Y_cS7ZDg4Iq0WPfw4g8/edit?usp=sharing
+
+History:
+
+[Toggle Invoice'2019.02](https://docs.google.com/spreadsheets/d/19yda-N69KBc4EvxGnFQItDg0Y_cS7ZDg4Iq0WPfw4g8/edit?usp=sharing )
+
+[Toggle Invoice'2018.05](https://docs.google.com/spreadsheets/d/1lSqnC6dxMgknevUSmaINxam6LgNHvpkVPkXs8PBalQk/edit?usp=sharing )
+
 
 ### From scratch
 
