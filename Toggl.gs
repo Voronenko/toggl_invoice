@@ -1,3 +1,4 @@
+
 function fetchDetailsReport(apiToken, workspaceId, since, until, page) {
   
   var usernamePassword = apiToken + ":api_token";
