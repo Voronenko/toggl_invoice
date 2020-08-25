@@ -1,0 +1,33 @@
+{
+  "name": "toggl_invoice",
+  "version": "1.0.0",
+  "description": "Personal invoice generation script basing on toggl api",
+  "main": "./src/Code.js",
+  "directories": {},
+  "dependencies": {
+    "@types/google-apps-script": "^1.0.14"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.8.4",
+    "babel-jest": "^25.1.0",
+    "babel-loader": "^8.0.6",
+    "@google/clasp": "^2.3.0",
+    "copy-webpack-plugin": "^6.0.3",
+    "jest": "^25.1.0",
+    "minimist": ">=1.2.3",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.10"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "test": "jest",
+    "build:webpack": "webpack",
+    "build": "npm run clean && npm test && npm run build:webpack",
+    "push": "npm run build && clasp push"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com:Voronenko/toggl_invoice.git"
+  },
+  "license": "MIT"
+}

@@ -77,6 +77,7 @@ clasp login
 
 assuming you are working individually, grant all the required permissions.
 One final little job you will need to do is to go into your Google Apps Script Settings and toggle the API to, on.
+Do it under link https://script.google.com/home/usersettings
 
 See docs below
 
