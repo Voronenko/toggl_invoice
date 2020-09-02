@@ -3,7 +3,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   context: __dirname,
-  mode: 'none', 
+  mode: 'none',
   entry:  {
     app: './src/App.js'
   },
@@ -21,7 +21,15 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [ '@babel/preset-env' ]
+            "presets": [
+              [
+                "@babel/preset-env", {
+                  "targets": {
+                    "node": "current"
+                  }
+                }
+              ]
+            ]
           }
         }
       }
@@ -31,8 +39,6 @@ module.exports = {
     new CopyPlugin({
       patterns: [
       './src/Code.js',
-      './src/Dates.js',
-      './src/Toggl.js',
       './src/appsscript.json'
       ]
     })

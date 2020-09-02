@@ -4,26 +4,39 @@
   "description": "Personal invoice generation script basing on toggl api",
   "main": "./src/Code.js",
   "directories": {},
-  "dependencies": {
-    "@types/google-apps-script": "^1.0.14"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "@babel/plugin-transform-async-to-generator": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/preset-env": "^7.8.4",
+    "@google/clasp": "^2.3.0",
+    "@types/google-apps-script": "^1.0.14",
     "babel-jest": "^25.1.0",
     "babel-loader": "^8.0.6",
-    "@google/clasp": "^2.3.0",
     "copy-webpack-plugin": "^6.0.3",
+    "es6-promise": "^4.2.8",
+    "googleapis": "^59.0.0",
+    "isomorphic-fetch": "^2.2.1",
     "jest": "^25.1.0",
     "minimist": ">=1.2.3",
+    "moment": "^2.0.0",
+    "node-fetch": "^2.6.0",
+    "sync-request": "^6.1.0",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.10"
   },
   "scripts": {
     "clean": "rm -rf ./dist",
-    "test": "jest",
+    "test": "jest --runInBand",
     "build:webpack": "webpack",
     "build": "npm run clean && npm test && npm run build:webpack",
     "push": "npm run build && clasp push"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
+    ]
   },
   "repository": {
     "type": "git",

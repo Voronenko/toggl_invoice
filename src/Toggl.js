@@ -41,3 +41,42 @@ function fetchProjects(apiToken, workspaceId) {
   var result = JSON.parse(responseBody);
   return result;
 }
+
+
+function fetchProjectTimesheet(apiToken, workspaceId, since, until, project, ignoreTags) {
+
+  Logger.log("PROJECT='" + project + "'");
+  var timesheet = [];
+
+  var report = fetchDetailsReport(apiToken, workspaceId, since, until);
+  Logger.log("total count: " + report.total_count + " - per page: " + report.per_page);
+  var numberOfPages = Math.ceil(report.total_count / report.per_page);
+  Logger.log("number of pages: " + numberOfPages);
+  var page = 1;
+  do {
+    for (var i = 0; i < report.data.length; i++) {
+      var ignoreEntry = false;
+      var timeEntry = report.data[i];
+      if (project && timeEntry.project != project) ignoreEntry = true;
+      Logger.log(timeEntry.project, "|", project, "|", ignoreEntry);
+      for (var tag in timeEntry.tags) {
+        if (tag in ignoreTags) {
+          ignoreEntry = true;
+        }
+      }
+      if (!ignoreEntry) {
+        timesheet.push(timeEntry);
+      }
+    }
+    ++page;
+    report = fetchDetailsReport(apiToken, workspaceId, since, until, page);
+  } while (page <= numberOfPages);
+  return timesheet;
+}
+
+
+export {
+  fetchProjects,
+  fetchDetailsReport,
+  fetchProjectTimesheet
+}

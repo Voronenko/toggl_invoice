@@ -1,3 +1,23 @@
+function getMonday(d) {
+  let dd = new Date(d);
+  let day = d.getDay();
+  let diff = dd.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+  return new Date(dd.setDate(diff));
+}
+
+function getPreviousMonday(d) {
+  let dd = new Date(d);
+  let pd = new Date(dd.getTime() - 7 * (24 * 3600 * 1000))
+  return getMonday(pd);
+}
+
+function getPreviousMonday2(d) {
+  var d = new Date(d);
+  var pd = new Date(endDate.getTime() - 14 * (24 * 3600 * 1000))
+  return getMonday(pd);
+}
+
+
 function daysOfMonth(year, month) {
   return new Date(year, month + 1, 0).getDate();
 }
@@ -54,3 +74,9 @@ function parseISODateTime(isoDateTime) {
     return;
   }
 }
+
+
+export {
+  getPreviousMonday,
+  getMonday
+};
