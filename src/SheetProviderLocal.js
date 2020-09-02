@@ -1,3 +1,8 @@
+import {
+  parseISODateTime
+} from './Dates.js'
+
+
 const fs = require('fs');
 const fsp = require('fs').promises;
 const readline = require('readline');
@@ -65,14 +70,16 @@ function SheetProvider(auth, spreadSheetId) {
 
   this.getStartDate = async function () {
     const cell = await that.getCell("Config!B2:B2");
-    const startDate = cell.values[0][0];
+    const startDateRaw = cell.values[0][0];
+    const startDate = parseISODateTime(startDateRaw);
     return startDate;
   }
 
   this.getEndDate = async function () {
     const cell = await that.getCell("Config!B3:B3");
-    const startDate = cell.values[0][0];
-    return startDate;
+    const endDateRaw = cell.values[0][0];
+    const endDate = parseISODateTime(endDateRaw);
+    return endDate;
   }
 
   this.getProject = async function () {

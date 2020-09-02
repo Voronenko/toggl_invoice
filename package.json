@@ -28,7 +28,7 @@
   },
   "scripts": {
     "clean": "rm -rf ./dist",
-    "test": "jest --runInBand",
+    "test": "jest --runInBand src/App.ReportMethods.test.js",
     "build:webpack": "webpack",
     "build": "npm run clean && npm test && npm run build:webpack",
     "push": "npm run build && clasp push"

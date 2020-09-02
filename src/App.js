@@ -6,7 +6,10 @@ import {
 
 import {
   getPreviousMonday,
-  getMonday
+  getMonday,
+  parseISODateTime,
+  millisToDecimalHours,
+  daysOfMonth
 } from './Dates.js'
 
 const SHT_CONFIG = 'Config';
@@ -79,22 +82,25 @@ function month_invoice(config) {
 
   var timesheetStartDate = config.timesheetStartDate;
   Logger.log("start date: " + timesheetStartDate);
-  var startDate = new Date(timesheetStartDate.getYear(), timesheetStartDate.getMonth(), 1);
+  var startDate = new Date(timesheetStartDate.getFullYear(), timesheetStartDate.getMonth(), 1);
   var since = Utilities.formatDate(startDate, timeZone, "yyyy-MM-dd");
   Logger.log("since: " + since);
 
-  var days = daysOfMonth(startDate.getYear(), startDate.getMonth());
+  var days = daysOfMonth(startDate.getFullYear(), startDate.getMonth());
 
-  var endDate = new Date(startDate.getYear(), startDate.getMonth(), days);
+  var endDate = new Date(startDate.getFullYear(), startDate.getMonth(), days);
   Logger.log("end date: " + endDate);
   var until = Utilities.formatDate(endDate, timeZone, "yyyy-MM-dd");
   Logger.log("until: " + until);
 
-  ignoreTagsStr = config.ignoreTags || "";
-  ignoreTags = ignoreTagsStr.split(",");
-  var timesheet = fetchTimesheet(config.apiToken, config.workspaceId, since, until, config.project, ignoreTags);
+  var ignoreTagsStr = config.ignoreTags || "";
+  var ignoreTags = ignoreTagsStr.split(",");
+  var timesheet = fetchProjectTimesheet(config.apiToken, config.workspaceId, since, until, config.project, ignoreTags);
   var sheetName = getSheetName(startDate, endDate, timeZone, config.project);
-  createTimesheet(sheetName, timesheet);
+  return {
+    timesheet: timesheet,
+    sheetName: sheetName
+  }
 }
 
 // Generate time sheet for range
@@ -105,20 +111,20 @@ async function range_invoice(config) {
 
   var timesheetStartDate = config.timesheetStartDate;
   Logger.log("start date: " + timesheetStartDate);
-  var startDate = new Date(timesheetStartDate.getYear(), timesheetStartDate.getMonth(), timesheetStartDate.getDate());
+  var startDate = new Date(timesheetStartDate.getFullYear(), timesheetStartDate.getMonth(), timesheetStartDate.getDate());
   var since = Utilities.formatDate(startDate, timeZone, "yyyy-MM-dd");
   Logger.log("since: " + since);
 
   var timesheetEndDate = config.timesheetEndDate;
-  var endDate = new Date(timesheetEndDate.getYear(), timesheetEndDate.getMonth(), timesheetEndDate.getDate());
+  var endDate = new Date(timesheetEndDate.getFullYear(), timesheetEndDate.getMonth(), timesheetEndDate.getDate());
   Logger.log("end date: " + endDate);
   var until = Utilities.formatDate(endDate, timeZone, "yyyy-MM-dd");
   Logger.log("until: " + until);
 
-  ignoreTagsStr = config.ignoreTags || "";
-  ignoreTags = ignoreTagsStr.split(",");
+  var ignoreTagsStr = config.ignoreTags || "";
+  var ignoreTags = ignoreTagsStr.split(",");
 
-  var timesheet = await fetchTimesheet(config.apiToken, config.workspaceId, since, until, config.project, ignoreTags);
+  var timesheet = await fetchProjectTimesheet(config.apiToken, config.workspaceId, since, until, config.project, ignoreTags);
   var sheetName = getSheetName(startDate, endDate, timeZone, config.project);
 
   return {
@@ -138,38 +144,6 @@ function load_projects(config) {
     configSheet.getRange('G' + currentRow).setValue(projects[i].name);
     currentRow++;
   }
-}
-
-function fetchTimesheet(apiToken, workspaceId, since, until, project, ignoreTags) {
-
-  Logger.log("PROJECT=", project);
-
-  var timesheet = [];
-
-  var report = fetchDetailsReport(apiToken, workspaceId, since, until);
-  Logger.log("total count: " + report.total_count + " - per page: " + report.per_page);
-  var numberOfPages = Math.ceil(report.total_count / report.per_page);
-  Logger.log("number of pages: " + numberOfPages);
-  var page = 1;
-  do {
-    for (var i = 0; i < report.data.length; i++) {
-      ignoreEntry = false;
-      var timeEntry = report.data[i];
-      if (project && timeEntry.project != project) ignoreEntry = true;
-      for (tag in timeEntry.tags) {
-        if (tag in ignoreTags) {
-          ignoreEntry = true;
-        }
-      }
-      if (!ignoreEntry) {
-        timesheet.push(timeEntry);
-      }
-    }
-    ++page;
-    report = fetchDetailsReport(apiToken, workspaceId, since, until, page);
-  } while (page <= numberOfPages);
-
-  return timesheet;
 }
 
 function getSheetName(startDate, endDate, timeZone, project) {
@@ -213,12 +187,12 @@ function createTimesheet(sheetName, timesheet) {
 
   var row = 2
   for (var i = 0; i < timesheet.length; i++) {
-    var timesheetEntry = timesheet[i];
-    start = parseISODateTime(timesheetEntry["start"]);
-    end = parseISODateTime(timesheetEntry["end"]);
-    desc = timesheetEntry["description"];
-    tags = timesheetEntry["tags"];
-    dur = millisToDecimalHours(timesheetEntry["dur"]);
+    let timesheetEntry = timesheet[i];
+    let start = parseISODateTime(timesheetEntry["start"]);
+    let end = parseISODateTime(timesheetEntry["end"]);
+    let desc = timesheetEntry["description"];
+    let tags = timesheetEntry["tags"];
+    let dur = millisToDecimalHours(timesheetEntry["dur"]);
 
     sheet.getRange(row, 1, 1, 6).setValues([
       [start, desc, dur, start, end, tags]
@@ -248,7 +222,8 @@ export {
   set_interval_7_days_inclusive,
   set_interval_14_days_inclusive,
   getPreviousMonday,
-  getMonday
+  getMonday,
+  createTimesheet
 };
 
 

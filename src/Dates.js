@@ -66,8 +66,8 @@ function parseISODateTime(isoDateTime) {
       offset *= ((d[15] == '-') ? 1 : -1);
     }
 
-    offset -= date.getTimezoneOffset();
-    time = (Number(date) + (offset * 60 * 1000));
+    offset = offset - date.getTimezoneOffset();
+    var time = (Number(date) + (offset * 60 * 1000));
     aDate.setTime(Number(time));
     return aDate;
   } catch (e) {
@@ -78,5 +78,8 @@ function parseISODateTime(isoDateTime) {
 
 export {
   getPreviousMonday,
-  getMonday
+  getMonday,
+  parseISODateTime,
+  millisToDecimalHours,
+  daysOfMonth
 };

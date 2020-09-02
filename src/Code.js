@@ -43,13 +43,14 @@ function loadConfiguration(wb, configSheet) {
 
 function month_invoice() {
   var config = loadConfiguration(SpreadsheetApp.getActive(), SHT_CONFIG);
-  app.month_invoice(config);
+  var result = app.month_invoice(config);
+  app.createTimesheet(result.sheetName, result.timesheet);
 }
 
 async function range_invoice() {
   var config = loadConfiguration(SpreadsheetApp.getActive(), SHT_CONFIG);
   var result = await app.range_invoice(config);
-  createTimesheet(result.sheetName, result.timesheet);
+  app.createTimesheet(result.sheetName, result.timesheet);
 }
 
 function load_projects() {
