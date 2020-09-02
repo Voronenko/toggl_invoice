@@ -18,7 +18,7 @@ describe('Config pane', () => {
         var auth = await getAuth();
         var sheetProvider = new SheetProvider(auth);
         var workspaceID = sheetProvider.getWorkspaceID(sheetId);
-        expect(workspaceID).resolves.toEqual("1162029");
+        newFunction(workspaceID);
       });
 
       test("Toggl token is specified", async () => {
@@ -32,21 +32,21 @@ describe('Config pane', () => {
         var auth = await getAuth();
         var sheetProvider = new SheetProvider(auth);
         var value = sheetProvider.getStartDate(sheetId);
-        expect(value).resolves.toEqual("7/1/2020");
+        expect(value).resolves.toBeTruthy();
       });
 
       test("End date is specified", async () => {
         var auth = await getAuth();
         var sheetProvider = new SheetProvider(auth);
         var value = sheetProvider.getEndDate(sheetId);
-        expect(value).resolves.toEqual("8/22/2020");
+        expect(value).resolves.toBeTruthy();
       });
 
       test("Project is specified", async () => {
         var auth = await getAuth();
         var sheetProvider = new SheetProvider(auth);
         var value = sheetProvider.getProject(sheetId);
-        expect(value).resolves.toEqual("LittleBigMake");
+        expect(value).resolves.toBeTruthy();
       });
 
       test("Ignore tags are specified", async () => {
@@ -70,3 +70,7 @@ describe('Config pane', () => {
 
      }
 );
+function newFunction(workspaceID) {
+  expect(workspaceID).resolves.toEqual("1162029");
+}
+

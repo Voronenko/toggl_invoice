@@ -143,7 +143,7 @@ function load_projects() {
 
 function fetchTimesheet(apiToken, workspaceId, since, until, project, ignoreTags) {
 
-  console.log("PROJECT=", project);
+  Logger.log("PROJECT=", project);
 
   var timesheet = [];
 
@@ -180,8 +180,8 @@ function getSheetName(startDate, endDate, timeZone, project) {
   var startOfMonth = new Date(startDate.getFullYear(), startDate.getMonth(), 0, 0, 0, 0);
   var endOfMonth = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
 
-  console.log("startOfMonth=", startOfMonth);
-  console.log("endOfMonth=", endOfMonth);
+  Logger.log("startOfMonth=", startOfMonth);
+  Logger.log("endOfMonth=", endOfMonth);
 
   if ((startOfMonth.getTime() == startDate.getTime()) && (endOfMonth.getTime() == endDate.getTime())) {
     startDateString = Utilities.formatDate(startDate, timeZone, "yyyyMM");
