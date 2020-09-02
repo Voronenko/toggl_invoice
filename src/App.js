@@ -10,7 +10,7 @@ import {
 } from './Dates.js'
 
 const SHT_CONFIG = 'Config';
-const DATE_FORMAT_SHEET = 'YYYY-MM-DD'
+const DATE_FORMAT_SHEET = 'yyyy-MM-dd'
 
 async function set_interval_1_days_exclusive() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHT_CONFIG);

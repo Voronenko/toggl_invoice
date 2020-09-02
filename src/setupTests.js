@@ -15,7 +15,13 @@ const Utilitiesmock = {
     return Buffer.from(value).toString('base64');
   },
   formatDate: function(someDate, timeZone, dateFormat) {
-    return moment(someDate).format(dateFormat);
+    var targetDateFormat = dateFormat;
+    switch (dateFormat) {
+      case 'yyyy-MM-dd':
+         targetDateFormat = 'YYYY-MM-DD';
+         break;
+    }
+    return moment(someDate).format(targetDateFormat);
   },
   removeItem: jest.fn(),
   clear: jest.fn(),
