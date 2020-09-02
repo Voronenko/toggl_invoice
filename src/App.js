@@ -72,9 +72,7 @@ async function set_interval_this_week_exclusive() {
 }
 
 // Generate time sheet for month
-function month_invoice() {
-
-  var config = loadConfiguration(SpreadsheetApp.getActive(), SHT_CONFIG);
+function month_invoice(config) {
 
   var timeZone = Session.getScriptTimeZone();
   Logger.log("script time zone: " + timeZone);
@@ -100,9 +98,7 @@ function month_invoice() {
 }
 
 // Generate time sheet for range
-function range_invoice() {
-
-  var config = loadConfiguration(SpreadsheetApp.getActive(), SHT_CONFIG);
+async function range_invoice(config) {
 
   var timeZone = Session.getScriptTimeZone();
   Logger.log("script time zone: " + timeZone);
@@ -122,14 +118,17 @@ function range_invoice() {
   ignoreTagsStr = config.ignoreTags || "";
   ignoreTags = ignoreTagsStr.split(",");
 
-  var timesheet = fetchTimesheet(config.apiToken, config.workspaceId, since, until, config.project, ignoreTags);
+  var timesheet = await fetchTimesheet(config.apiToken, config.workspaceId, since, until, config.project, ignoreTags);
   var sheetName = getSheetName(startDate, endDate, timeZone, config.project);
-  createTimesheet(sheetName, timesheet);
+
+  return {
+    timesheet: timesheet,
+    sheetName: sheetName
+  }
 }
 
 
-function load_projects() {
-  var config = loadConfiguration(SpreadsheetApp.getActive(), SHT_CONFIG);
+function load_projects(config) {
   var projects = fetchProjects(config.apiToken, config.workspaceId);
   var configSheet = SpreadsheetApp.getActive().getSheetByName(SHT_CONFIG);
 
@@ -238,28 +237,6 @@ function createTimesheet(sheetName, timesheet) {
   sheet.autoResizeColumn(5);
   sheet.autoResizeColumn(6);
 }
-
-// http://googleappsdeveloper.blogspot.be/2012/05/insider-tips-for-using-apps-script-and.html
-function loadConfiguration(wb, configSheet) {
-
-  Logger.log("Loading configuration ...");
-
-  var configsheet = wb.getSheetByName(configSheet);
-  var result = new Array();
-
-  var cfgdata = configsheet.getDataRange().getValues();
-  for (i = 1; i < cfgdata.length; i++) {
-    var key = cfgdata[i][0];
-    var value = cfgdata[i][1];
-
-    Logger.log("key: " + key + " - value: " + value);
-
-    result[key] = value;
-  }
-
-  return result
-}
-
 
 export {
   month_invoice,

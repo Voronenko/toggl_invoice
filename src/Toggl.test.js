@@ -43,10 +43,10 @@ describe('Toggl Api works', () => {
 
   test("Project entries based on date period can be retrieved", async () => {
     var auth = await getAuth();
-    var sheetProvider = new SheetProvider(auth);
-    var workspaceId = await sheetProvider.getWorkspaceID(sheetId);
-    var apiToken = await sheetProvider.getTogglToken(sheetId);
-    var project = await sheetProvider.getProject(sheetId);
+    var sheetProvider = new SheetProvider(auth, sheetId);
+    var workspaceId = await sheetProvider.getWorkspaceID();
+    var apiToken = await sheetProvider.getTogglToken();
+    var project = await sheetProvider.getProject();
     var project_entries = fetchProjectTimesheet(apiToken, workspaceId, "2020-07-01", "2020-08-31", project, []);
     let data = JSON.stringify(project_entries);
     fs.writeFileSync('z-project-entries-since-to.json', data);

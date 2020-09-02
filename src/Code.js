@@ -20,16 +20,41 @@ function onOpen() {
 function do_nothing(){
 }
 
-function month_invoice() {
-  app.month_invoice();
+// http://googleappsdeveloper.blogspot.be/2012/05/insider-tips-for-using-apps-script-and.html
+function loadConfiguration(wb, configSheet) {
+
+  Logger.log("Loading configuration ...");
+
+  var configsheet = wb.getSheetByName(configSheet);
+  var result = new Array();
+
+  var cfgdata = configsheet.getDataRange().getValues();
+  for (i = 1; i < cfgdata.length; i++) {
+    var key = cfgdata[i][0];
+    var value = cfgdata[i][1];
+
+    Logger.log("key: " + key + " - value: " + value);
+
+    result[key] = value;
+  }
+
+  return result
 }
 
-function range_invoice() {
-  app.range_invoice();
+function month_invoice() {
+  var config = loadConfiguration(SpreadsheetApp.getActive(), SHT_CONFIG);
+  app.month_invoice(config);
+}
+
+async function range_invoice() {
+  var config = loadConfiguration(SpreadsheetApp.getActive(), SHT_CONFIG);
+  var result = await app.range_invoice(config);
+  createTimesheet(result.sheetName, result.timesheet);
 }
 
 function load_projects() {
-  app.load_projects();
+  var config = loadConfiguration(SpreadsheetApp.getActive(), SHT_CONFIG);
+  app.load_projects(config);
 }
 
 function set_interval_1_days_exclusive() {

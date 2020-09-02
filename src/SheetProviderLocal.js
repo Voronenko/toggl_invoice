@@ -34,7 +34,7 @@ function SheetProvider(auth, spreadSheetId) {
   this.startPosition = "";
   this.endPosition = "";
 
-  this.spreadSheetId = "";
+  this.spreadSheetId = spreadSheetId;
 
 
   this.auth = auth;
@@ -51,50 +51,50 @@ function SheetProvider(auth, spreadSheetId) {
     that.spreadSheetId = newId;
   }
 
-  this.getWorkspaceID = async function (spreadsheetId) {
-    const cell = await that.getCell(spreadsheetId, "Config!B4:B4");
+  this.getWorkspaceID = async function () {
+    const cell = await that.getCell("Config!B4:B4");
     const workspaceId = cell.values[0][0];
     return workspaceId;
   }
 
-  this.getTogglToken = async function (spreadsheetId) {
-    const cell = await that.getCell(spreadsheetId, "Config!B5:B5");
+  this.getTogglToken = async function () {
+    const cell = await that.getCell("Config!B5:B5");
     const togglToken = cell.values[0][0];
     return togglToken;
   }
 
-  this.getStartDate = async function (spreadsheetId) {
-    const cell = await that.getCell(spreadsheetId, "Config!B2:B2");
+  this.getStartDate = async function () {
+    const cell = await that.getCell("Config!B2:B2");
     const startDate = cell.values[0][0];
     return startDate;
   }
 
-  this.getEndDate = async function (spreadsheetId) {
-    const cell = await that.getCell(spreadsheetId, "Config!B3:B3");
+  this.getEndDate = async function () {
+    const cell = await that.getCell("Config!B3:B3");
     const startDate = cell.values[0][0];
     return startDate;
   }
 
-  this.getProject = async function (spreadsheetId) {
-    const cell = await that.getCell(spreadsheetId, "Config!B6:B6");
+  this.getProject = async function () {
+    const cell = await that.getCell("Config!B6:B6");
     const project = cell.values[0][0];
     return project;
   }
 
-  this.getIgnoreTags = async function (spreadsheetId) {
-    const cell = await that.getCell(spreadsheetId, "Config!B7:B7");
+  this.getIgnoreTags = async function () {
+    const cell = await that.getCell("Config!B7:B7");
     const ignoretags = cell.values[0][0];
     return ignoretags;
   }
 
-  this.loadConfiguration = async function (spreadsheetId) {
+  this.loadConfiguration = async function () {
      return {
-       timesheetStartDate: await that.getStartDate(spreadsheetId),
-       timesheetEndDate: await that.getEndDate(spreadsheetId),
-       workspaceId: await that.getWorkspaceID(spreadsheetId),
-       apiToken: await that.getTogglToken(spreadsheetId),
-       project: await that.getProject(spreadsheetId),
-       ignoreTags: await that.getIgnoreTags(spreadsheetId),
+       timesheetStartDate: await that.getStartDate(),
+       timesheetEndDate: await that.getEndDate(),
+       workspaceId: await that.getWorkspaceID(),
+       apiToken: await that.getTogglToken(),
+       project: await that.getProject(),
+       ignoreTags: await that.getIgnoreTags(),
      }
   }
 
@@ -123,14 +123,14 @@ function SheetProvider(auth, spreadSheetId) {
     that.endPosition = String.fromCharCode(64 + row) + col;
   }
 
-  this.getCell = async function (spreadsheetId, range) {
+  this.getCell = async function (range) {
       var sheets = google.sheets({
         version: 'v4',
         auth: that.auth
       });
       try {
       const response = await sheets.spreadsheets.values.get({
-        spreadsheetId: spreadsheetId,
+        spreadsheetId: that.spreadSheetId,
         range: range,
       });
       return response.data;

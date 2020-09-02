@@ -1,9 +1,10 @@
 import {
+  load_projects,
   set_interval_1_days_exclusive,
+  set_interval_this_week_exclusive,
+  set_interval_previous_week_exclusive,
   set_interval_7_days_inclusive,
   set_interval_14_days_inclusive,
-  set_interval_previous_week_exclusive,
-  set_interval_this_week_exclusive,
 } from './App.js'
 
 import {
@@ -35,12 +36,12 @@ function formatYMD(date) {
   return [year, month, day].join('-');
 }
 
-describe('Menu actions', () => {
+describe('Menu interval actions', () => {
 
       test("set_interval_1_days_exclusive", async () => {
         var auth = await getAuth();
         global.SpreadsheetApp.setAuth(auth);
-        var sheetProvider = new SheetProvider(auth);
+        var sheetProvider = new SheetProvider(auth, spreadsheetId);
 
         var res = await set_interval_1_days_exclusive();
 
@@ -48,10 +49,10 @@ describe('Menu actions', () => {
         var startDate = new Date(endDate.getTime() - 1 * (24 * 3600 * 1000));
         endDate = startDate;
 
-        const startcell = await sheetProvider.getCell(spreadsheetId, "Config!B2:B2");
+        const startcell = await sheetProvider.getCell("Config!B2:B2");
         const sheetStartDate = startcell.values[0][0];
 
-        const endcell = await sheetProvider.getCell(spreadsheetId, "Config!B3:B3");
+        const endcell = await sheetProvider.getCell("Config!B3:B3");
         const sheetEndDate = endcell.values[0][0];
 
         expect(sheetStartDate).toEqual(formatYMD(startDate));
@@ -62,17 +63,17 @@ describe('Menu actions', () => {
       test("set_interval_7_days_inclusive", async () => {
         var auth = await getAuth();
         global.SpreadsheetApp.setAuth(auth);
-        var sheetProvider = new SheetProvider(auth);
+        var sheetProvider = new SheetProvider(auth, spreadsheetId);
 
         var res = await set_interval_7_days_inclusive();
 
         var endDate = new Date();
         var startDate = new Date(endDate.getTime() - 7 * (24 * 3600 * 1000));
 
-        const startcell = await sheetProvider.getCell(spreadsheetId, "Config!B2:B2");
+        const startcell = await sheetProvider.getCell("Config!B2:B2");
         const sheetStartDate = startcell.values[0][0];
 
-        const endcell = await sheetProvider.getCell(spreadsheetId, "Config!B3:B3");
+        const endcell = await sheetProvider.getCell("Config!B3:B3");
         const sheetEndDate = endcell.values[0][0];
 
         expect(sheetStartDate).toEqual(formatYMD(startDate));
@@ -83,17 +84,17 @@ describe('Menu actions', () => {
       test("set_interval_14_days_inclusive", async () => {
         var auth = await getAuth();
         global.SpreadsheetApp.setAuth(auth);
-        var sheetProvider = new SheetProvider(auth);
+        var sheetProvider = new SheetProvider(auth, spreadsheetId);
 
         var res = await set_interval_14_days_inclusive();
 
         var endDate = new Date();
         var startDate = new Date(endDate.getTime() - 14 * (24 * 3600 * 1000));
 
-        const startcell = await sheetProvider.getCell(spreadsheetId, "Config!B2:B2");
+        const startcell = await sheetProvider.getCell("Config!B2:B2");
         const sheetStartDate = startcell.values[0][0];
 
-        const endcell = await sheetProvider.getCell(spreadsheetId, "Config!B3:B3");
+        const endcell = await sheetProvider.getCell("Config!B3:B3");
         const sheetEndDate = endcell.values[0][0];
 
         expect(sheetStartDate).toEqual(formatYMD(startDate));
@@ -103,7 +104,7 @@ describe('Menu actions', () => {
       test("set_interval_previous_week_exclusive", async () => {
         var auth = await getAuth();
         global.SpreadsheetApp.setAuth(auth);
-        var sheetProvider = new SheetProvider(auth);
+        var sheetProvider = new SheetProvider(auth, spreadsheetId);
 
         var res = await set_interval_previous_week_exclusive();
 
@@ -111,10 +112,10 @@ describe('Menu actions', () => {
         var startDate = getPreviousMonday(today);
         var endDate = new Date(startDate.getTime() + 6 * (24 * 3600 * 1000));
 
-        const startcell = await sheetProvider.getCell(spreadsheetId, "Config!B2:B2");
+        const startcell = await sheetProvider.getCell("Config!B2:B2");
         const sheetStartDate = startcell.values[0][0];
 
-        const endcell = await sheetProvider.getCell(spreadsheetId, "Config!B3:B3");
+        const endcell = await sheetProvider.getCell("Config!B3:B3");
         const sheetEndDate = endcell.values[0][0];
 
         expect(sheetStartDate).toEqual(formatYMD(startDate));
@@ -125,7 +126,7 @@ describe('Menu actions', () => {
       test("set_interval_this_week_exclusive", async () => {
         var auth = await getAuth();
         global.SpreadsheetApp.setAuth(auth);
-        var sheetProvider = new SheetProvider(auth);
+        var sheetProvider = new SheetProvider(auth, spreadsheetId);
 
         var res = await set_interval_this_week_exclusive();
 
@@ -133,10 +134,10 @@ describe('Menu actions', () => {
         var startDate = getMonday(today);
         var endDate = new Date(startDate.getTime() + 6 * (24 * 3600 * 1000));
 
-        const startcell = await sheetProvider.getCell(spreadsheetId, "Config!B2:B2");
+        const startcell = await sheetProvider.getCell("Config!B2:B2");
         const sheetStartDate = startcell.values[0][0];
 
-        const endcell = await sheetProvider.getCell(spreadsheetId, "Config!B3:B3");
+        const endcell = await sheetProvider.getCell("Config!B3:B3");
         const sheetEndDate = endcell.values[0][0];
 
         expect(sheetStartDate).toEqual(formatYMD(startDate));
@@ -146,17 +147,17 @@ describe('Menu actions', () => {
       test("set_interval_14_days_inclusive", async () => {
         var auth = await getAuth();
         global.SpreadsheetApp.setAuth(auth);
-        var sheetProvider = new SheetProvider(auth);
+        var sheetProvider = new SheetProvider(auth, spreadsheetId);
 
         var res = await set_interval_14_days_inclusive();
 
         var endDate = new Date();
         var startDate = new Date(endDate.getTime() - 14 * (24 * 3600 * 1000))
 
-        const startcell = await sheetProvider.getCell(spreadsheetId, "Config!B2:B2");
+        const startcell = await sheetProvider.getCell("Config!B2:B2");
         const sheetStartDate = startcell.values[0][0];
 
-        const endcell = await sheetProvider.getCell(spreadsheetId, "Config!B3:B3");
+        const endcell = await sheetProvider.getCell("Config!B3:B3");
         const sheetEndDate = endcell.values[0][0];
 
         expect(sheetStartDate).toEqual(formatYMD(startDate));
