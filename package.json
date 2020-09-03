@@ -16,13 +16,11 @@
     "copy-webpack-plugin": "^6.0.3",
     "es6-promise": "^4.2.8",
     "googleapis": "^59.0.0",
-    "isomorphic-fetch": "^2.2.1",
     "jest": "^25.1.0",
     "jshint": "^2.12.0",
     "minimist": ">=1.2.3",
     "moment": "^2.0.0",
     "moment-timezone": "^0.5.31",
-    "node-fetch": "^2.6.0",
     "sync-request": "^6.1.0",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.10"
