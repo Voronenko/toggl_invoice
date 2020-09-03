@@ -121,6 +121,8 @@ For development (tests, debugging) - additionally, you will need to get oauth2 t
 cd src && node z_regenerate_token.js
 ```
 
+Created project can be deleted from  https://console.cloud.google.com/cloud-resource-manager
+
 ## Tests
 
 Project is covered with tests, however those are related to my own test sheet and my test toggl account.
