@@ -10,9 +10,9 @@ Report can be filtered by project, and drop ignored tags (like pomidoro-break, o
 
 ### Simple
 
-Open [this Google Sheet](https://docs.google.com/spreadsheets/d/1GJsVM1V2z1pkzYRfk3gCkXXvPJzq18zOXVVBo22CLPg/edit#gid=0) and make a copy in your Google Drive account.
+Open [this Google Sheet](https://docs.google.com/spreadsheets/d/1GJsVM1V2z1pkzYRfk3gCkXXvPJzq18zOXVVBo22CLPg/edit?usp=sharing) and make a copy in your Google Drive account.
 
-https://docs.google.com/spreadsheets/d/1GJsVM1V2z1pkzYRfk3gCkXXvPJzq18zOXVVBo22CLPg/edit#gid=0
+https://docs.google.com/spreadsheets/d/1GJsVM1V2z1pkzYRfk3gCkXXvPJzq18zOXVVBo22CLPg/edit?usp=sharing
 
 
 Specify your toggl workspaceId and apiToken in a Config sheet.
