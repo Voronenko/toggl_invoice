@@ -77,11 +77,18 @@ clasp login
 
 assuming you are working individually, grant all the required permissions.
 One final little job you will need to do is to go into your Google Apps Script Settings and toggle the API to, on.
+Do it under link https://script.google.com/home/usersettings
 
 See docs below
 
 https://yagisanatode.com/2019/04/01/working-with-google-apps-script-in-visual-studio-code-using-clasp/
 
+## Jest tests
+
+you can limit to specific test
+```sh
+./node_modules/jest/bin/jest --runInBand App.ReportMethods.test.js --testNamePattern getSheetName
+```
 
 ## Acknowledgment
 Credits go to [thinkinglabs](https://github.com/thinkinglabs/toggl-google-sheet/) which provided an example on how to use the Toggl API with Google Sheet.
