@@ -1,5 +1,9 @@
 node_modules/
 dist/
+!dist/.clasp.json
 z-*.json
 credentials.json
 token.json
+.env
+demo/*
+!demo/.clasp.json

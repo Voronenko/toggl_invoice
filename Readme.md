@@ -10,42 +10,42 @@ Report can be filtered by project, and drop ignored tags (like pomidoro-break, o
 
 ### Simple
 
-Open [this Google Sheet](https://docs.google.com/spreadsheets/d/19yda-N69KBc4EvxGnFQItDg0Y_cS7ZDg4Iq0WPfw4g8/edit?usp=sharing) and make a copy in your Google Drive account.
+Open [this Google Sheet](https://docs.google.com/spreadsheets/d/1GJsVM1V2z1pkzYRfk3gCkXXvPJzq18zOXVVBo22CLPg/edit#gid=0) and make a copy in your Google Drive account.
 
-https://docs.google.com/spreadsheets/d/19yda-N69KBc4EvxGnFQItDg0Y_cS7ZDg4Iq0WPfw4g8/edit?usp=sharing
-
-History:
-
-[Toggle Invoice'2019.02](https://docs.google.com/spreadsheets/d/19yda-N69KBc4EvxGnFQItDg0Y_cS7ZDg4Iq0WPfw4g8/edit?usp=sharing )
-
-[Toggle Invoice'2018.05](https://docs.google.com/spreadsheets/d/1lSqnC6dxMgknevUSmaINxam6LgNHvpkVPkXs8PBalQk/edit?usp=sharing )
+https://docs.google.com/spreadsheets/d/1GJsVM1V2z1pkzYRfk3gCkXXvPJzq18zOXVVBo22CLPg/edit#gid=0
 
 
-### From scratch
-
-Create a new Google Sheet.
-
-Create a new script in your newly created Google Sheet and paste the contents of the files `Code.gs`, `Dates.gs` and `Toggl.gs` in their respective script files.
-
-Edit "config" sheet to fill in your *workspace_id* and *api_token*.
+Specify your toggl workspaceId and apiToken in a Config sheet.
 
 To figure out your *workspace_id*: go to Team in toggl.com. The number at the end of the URL is the workspace id.
 
 To figure out your *api_token*: go to your Profile in toggl.com, your API token is at the bottom of the page.
 
+After that click "Load projects data" to load information about projects in workplace.
+
+Modify invoice template, if needed.   Use sheet.
+
+History:
+
+[Toggl Invoice'2020.09](https://docs.google.com/spreadsheets/d/1GJsVM1V2z1pkzYRfk3gCkXXvPJzq18zOXVVBo22CLPg/edit#gid=0)
+
+[Toggl Invoice'2019.02](https://docs.google.com/spreadsheets/d/19yda-N69KBc4EvxGnFQItDg0Y_cS7ZDg4Iq0WPfw4g8/edit?usp=sharing )
+
+[Toggl Invoice'2018.05](https://docs.google.com/spreadsheets/d/1lSqnC6dxMgknevUSmaINxam6LgNHvpkVPkXs8PBalQk/edit?usp=sharing )
+
 ## Usage
 After a reopen of your Google Sheet you will have a new menu open called "*Toggl*" with a sub-menu 
 
-"*Get Invoice for Month*". 
+"*Get Invoice for Month*".
 
 Fill an any date of the month you want to import in cell B1. So if you want your timesheet for December 2019, fill the date 01/12/2019 and click *Toggl > Get Invoice for Month*.
 
 "*Get Invoice for Range*".
 
-Fill a start and end date of the period you want to import in cell B1 and C1. So if you want your timesheet for Q4 2019, fill the date 01/10/2019 - 31/12/2019  and 
+Fill a start and end date of the period you want to import in cell B1 and C1. So if you want your timesheet for Q4 2019, fill the date 01/10/2019 - 31/12/2019  and
 click *Toggl > Get Invoice for Range*.
 
-All reports support filtering by project - click  *Toggl > Load Projects Data* to load list of the projects for your account 
+All reports support filtering by project - click  *Toggl > Load Projects Data* to load list of the projects for your account
 
 
 ## Deep troubleshouting with vscode
@@ -79,15 +79,63 @@ assuming you are working individually, grant all the required permissions.
 One final little job you will need to do is to go into your Google Apps Script Settings and toggle the API to, on.
 Do it under link https://script.google.com/home/usersettings
 
-See docs below
+Create your new sheet which will be managed by clasp, choose sheet project.
+
+```sh
+clasp create
+```
+
+See docs below for a more detailed manual readme on installing clasp.
 
 https://yagisanatode.com/2019/04/01/working-with-google-apps-script-in-visual-studio-code-using-clasp/
 
-## Jest tests
+All most used actions are in Makefile:
+
+```Makefile
+
+# install deps
+init:
+	npm install
+
+# login(once)
+login:
+	node_modules/.bin/clasp login
+
+# create your sheet(once)
+create_sheet:
+	node_modules/.bin/clasp create
+
+# pack application
+webpack:
+	npm run build:webpack
+
+# deploy application to your sheet.
+deploy:
+	cd dist && ../node_modules/.bin/clasp push
+```
+
+login action will create credentials.json file, which will represent identity of your sheet.
+For development (tests, debugging) - additionally, you will need to get oauth2 token, via
+
+```sh
+cd src && node z_regenerate_token.js
+```
+
+## Tests
+
+Project is covered with tests, however those are related to my own test sheet and my test toggl account.
+You will need to adjust them to your scenario.
 
 you can limit to specific test
+
 ```sh
 ./node_modules/jest/bin/jest --runInBand App.ReportMethods.test.js --testNamePattern getSheetName
+```
+
+or run all pack via
+
+```sh
+npm test
 ```
 
 ## Acknowledgment
