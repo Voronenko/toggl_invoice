@@ -1,10 +1,9 @@
+/*jshint esversion: 8 */
 function fetchDetailsReport(apiToken, workspaceId, since, until, page) {
+  "use strict";
 
   var usernamePassword = apiToken + ":api_token";
   var digest = "Basic " + Utilities.base64Encode(usernamePassword);
-
-  Logger.log("Use logger.log for logging");
-
 
   var url = "https://www.toggl.com/reports/api/v2/details";
   var queryString = "workspace_id=" + workspaceId + "&user_agent=TogglePersonalExporter" + "&since=" + since + "&until=" + until;
@@ -23,6 +22,7 @@ function fetchDetailsReport(apiToken, workspaceId, since, until, page) {
 }
 
 function fetchProjects(apiToken, workspaceId) {
+  "use strict";
 
   var usernamePassword = apiToken + ":api_token";
   var digest = "Basic " + Utilities.base64Encode(usernamePassword);
@@ -44,6 +44,7 @@ function fetchProjects(apiToken, workspaceId) {
 
 
 function fetchProjectTimesheet(apiToken, workspaceId, since, until, project, ignoreTags) {
+  "use strict";
 
   Logger.log("PROJECT='" + project + "'");
   var timesheet = [];
@@ -57,7 +58,9 @@ function fetchProjectTimesheet(apiToken, workspaceId, since, until, project, ign
     for (var i = 0; i < report.data.length; i++) {
       var ignoreEntry = false;
       var timeEntry = report.data[i];
-      if (project && timeEntry.project != project) ignoreEntry = true;
+      if (project && timeEntry.project !== project) {
+        ignoreEntry = true;
+      }
       Logger.log(timeEntry.project, "|", project, "|", ignoreEntry);
       for (var tag in timeEntry.tags) {
         if (tag in ignoreTags) {
@@ -79,4 +82,4 @@ export {
   fetchProjects,
   fetchDetailsReport,
   fetchProjectTimesheet
-}
+};

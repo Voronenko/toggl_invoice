@@ -1,11 +1,9 @@
+/*jshint esversion: 8 */
 import {
   parseISODateTime
-} from './Dates.js'
+} from './Dates.js';
 
-
-const fs = require('fs');
 const fsp = require('fs').promises;
-const readline = require('readline');
 const {
   google
 } = require('googleapis');
@@ -14,6 +12,7 @@ const TOKEN_PATH = 'token.json';
 
 
 async function getAuth() {
+  "use strict";
   const content = await fsp.readFile('credentials.json');
   const credentials = JSON.parse(content);
 
@@ -33,6 +32,7 @@ async function getAuth() {
 
 
 function SheetProvider(auth, spreadSheetId) {
+  "use strict";
   var that = this;
 
   this.defaultSheetName = "Config";
@@ -46,53 +46,53 @@ function SheetProvider(auth, spreadSheetId) {
 
   this.getAuth = function() {
     return this.auth;
-  }
+  };
 
   this.setAuth = function (auth) {
     that.auth = auth;
-  }
+  };
 
   this.setSpreadSheetId = function(newId) {
     that.spreadSheetId = newId;
-  }
+  };
 
   this.getWorkspaceID = async function () {
     const cell = await that.getCell("Config!B4:B4");
     const workspaceId = cell.values[0][0];
     return workspaceId;
-  }
+  };
 
   this.getTogglToken = async function () {
     const cell = await that.getCell("Config!B5:B5");
     const togglToken = cell.values[0][0];
     return togglToken;
-  }
+  };
 
   this.getStartDate = async function () {
     const cell = await that.getCell("Config!B2:B2");
     const startDateRaw = cell.values[0][0];
     const startDate = parseISODateTime(startDateRaw);
     return startDate;
-  }
+  };
 
   this.getEndDate = async function () {
     const cell = await that.getCell("Config!B3:B3");
     const endDateRaw = cell.values[0][0];
     const endDate = parseISODateTime(endDateRaw);
     return endDate;
-  }
+  };
 
   this.getProject = async function () {
     const cell = await that.getCell("Config!B6:B6");
     const project = cell.values[0][0];
     return project;
-  }
+  };
 
   this.getIgnoreTags = async function () {
     const cell = await that.getCell("Config!B7:B7");
     const ignoretags = cell.values[0][0];
     return ignoretags;
-  }
+  };
 
   this.loadConfiguration = async function () {
      return {
@@ -102,33 +102,33 @@ function SheetProvider(auth, spreadSheetId) {
        apiToken: await that.getTogglToken(),
        project: await that.getProject(),
        ignoreTags: await that.getIgnoreTags(),
-     }
-  }
+     };
+  };
 
   this.getActive = function() {
     return that;
-  }
+  };
 
   this.getSheetByName = function(sheetName) {
      that.defaultSheetName = sheetName;
-     return that
-  }
+     return that;
+  };
 
   this.getActiveSpreadsheet = function() {
     return that;
-  }
+  };
 
   this.getRange = function(col, row) {
      var setterObj = new SheetProvider(that.auth);
      setterObj.setRange(col, row);
      setterObj.setSpreadSheetId(that.spreadSheetId);
      return setterObj;
-  }
+  };
 
   this.setRange = function (col, row) {
     that.startPosition = String.fromCharCode(64 + row) + col;
     that.endPosition = String.fromCharCode(64 + row) + col;
-  }
+  };
 
   this.getCell = async function (range) {
       var sheets = google.sheets({
@@ -145,7 +145,7 @@ function SheetProvider(auth, spreadSheetId) {
        Logger.log("Api returned error", err);
        return -1;
       }
-  }
+  };
 
   this.setValue = async function(value) {
 
@@ -180,11 +180,11 @@ function SheetProvider(auth, spreadSheetId) {
       Logger.log("Api returned error", err);
       return -1;
     }
-  }
+  };
 
 }
 
 export {
   getAuth,
   SheetProvider
-}
+};

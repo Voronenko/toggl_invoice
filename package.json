@@ -21,6 +21,7 @@
     "jshint": "^2.12.0",
     "minimist": ">=1.2.3",
     "moment": "^2.0.0",
+    "moment-timezone": "^0.5.31",
     "node-fetch": "^2.6.0",
     "sync-request": "^6.1.0",
     "webpack": "^4.44.1",
@@ -28,7 +29,7 @@
   },
   "scripts": {
     "clean": "rm -rf ./dist",
-    "test": "jest --runInBand src/App.ReportMethods.test.js",
+    "test": "jest --runInBand",
     "build:webpack": "webpack",
     "build": "npm run clean && npm test && npm run build:webpack",
     "push": "npm run build && clasp push"

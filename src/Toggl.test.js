@@ -1,14 +1,14 @@
+/*jshint esversion: 8 */
 import {
-  authorize,
   getAuth,
   SheetProvider
-} from './SheetProviderLocal.js'
+} from './SheetProviderLocal.js';
 
 import {
   fetchProjects,
   fetchDetailsReport,
   fetchProjectTimesheet
-} from './Toggl.js'
+} from './Toggl.js';
 
 const fs = require('fs');
 
@@ -42,6 +42,7 @@ describe('Toggl Api works', () => {
 //   });
 
   test("Project entries based on date period can be retrieved", async () => {
+    "use strict";
     var auth = await getAuth();
     var sheetProvider = new SheetProvider(auth, sheetId);
     var workspaceId = await sheetProvider.getWorkspaceID();

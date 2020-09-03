@@ -1,13 +1,14 @@
+/*jshint esversion: 8 */
 import {
-  authorize,
   getAuth,
   SheetProvider
-} from './SheetProviderLocal.js'
+} from './SheetProviderLocal.js';
 
 const sheetId = "1YF6laLAx2SXgImPahbyZva0_GuFKElqh612mBNG7tMI";
 
 
 describe('Config pane', () => {
+      "use strict";
 
       test("getAuth is provided", () => {
         expect(getAuth).toBeTruthy();

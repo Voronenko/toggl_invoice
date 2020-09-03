@@ -83,6 +83,12 @@ See docs below
 
 https://yagisanatode.com/2019/04/01/working-with-google-apps-script-in-visual-studio-code-using-clasp/
 
+## Jest tests
+
+you can limit to specific test
+```sh
+./node_modules/jest/bin/jest --runInBand App.ReportMethods.test.js --testNamePattern getSheetName
+```
 
 ## Acknowledgment
 Credits go to [thinkinglabs](https://github.com/thinkinglabs/toggl-google-sheet/) which provided an example on how to use the Toggl API with Google Sheet.

@@ -1,10 +1,10 @@
+/*jshint esversion: 8 */
 import {
-  authorize,
   getAuth,
   SheetProvider
-} from './SheetProviderLocal.js'
+} from './SheetProviderLocal.js';
 
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 const syncrequest = require('sync-request');
 
@@ -12,16 +12,24 @@ const sheetId = "1YF6laLAx2SXgImPahbyZva0_GuFKElqh612mBNG7tMI";
 
 const Utilitiesmock = {
   base64Encode: function (value) {
+    "use strict";
     return Buffer.from(value).toString('base64');
   },
-  formatDate: function(someDate, timeZone, dateFormat) {
+  formatDate: function(someDate, timeZone="Europe/Helsinki", dateFormat="YYY-MM-DD") {
     var targetDateFormat = dateFormat;
     switch (dateFormat) {
       case 'yyyy-MM-dd':
          targetDateFormat = 'YYYY-MM-DD';
          break;
+      case 'yyyyMMdd':
+         targetDateFormat = 'YYYYMMDD';
+         break;
+      case 'yyyyMM':
+         targetDateFormat = 'YYYYMM';
+         break;
+
     }
-    return moment(someDate).format(targetDateFormat);
+    return moment(someDate).tz(timeZone).format(targetDateFormat);
   },
   removeItem: jest.fn(),
   clear: jest.fn(),
@@ -36,21 +44,23 @@ const Loggermock = {
 
 const UrlFetchAppmock = {
   fetch: function(url, params) {
+    "use strict";
     var response = syncrequest('GET', url, params);
     var body = response.getBody('utf8');
     return {
       getContentText: function() {
          return body;
       }
-    }
+    };
   }
-}
+};
 
 const SessionMock = {
   getScriptTimeZone: function() {
-    return "Europe/Helsinki"
+    "use strict";
+    return "Europe/Helsinki";
   }
-}
+};
 
 const auth = getAuth();
 var SpreadsheetAppMock = new SheetProvider(auth);
