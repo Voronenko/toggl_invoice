@@ -22,13 +22,13 @@ function getSheetName(startDate, endDate, timeZone, project) {
   var startDateString = "";
   var endDateString = "";
 
-  var startOfMonth = new Date(startDate.getFullYear(), startDate.getMonth(), 0, 0, 0, 0);
+  var startOfMonth = new Date(startDate.getFullYear(), startDate.getMonth(), 1, 0, 0, 0);
   var endOfMonth = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
 
   Logger.log("startOfMonth=", startOfMonth);
   Logger.log("endOfMonth=", endOfMonth);
 
-  if ((startOfMonth.getTime() === startDate.getTime()) && (endOfMonth.getTime() === endDate.getTime())) {
+  if ((startOfMonth.toDateString() === startDate.toDateString()) && (endOfMonth.toDateString() === endDate.toDateString())) {
     startDateString = Utilities.formatDate(startDate, timeZone, "yyyyMM");
   } else {
     startDateString = Utilities.formatDate(startDate, timeZone, "yyyyMMdd") + "-";
@@ -142,12 +142,12 @@ async function range_invoice(config) {
 
   var timesheetStartDate = config.timesheetStartDate;
   Logger.log("start date: " + timesheetStartDate);
-  var startDate = new Date(timesheetStartDate.getFullYear(), timesheetStartDate.getMonth(), timesheetStartDate.getDay());
+  var startDate = new Date(timesheetStartDate.getFullYear(), timesheetStartDate.getMonth(), timesheetStartDate.getDate());
   var since = Utilities.formatDate(startDate, timeZone, "yyyy-MM-dd");
   Logger.log("since: " + since);
 
   var timesheetEndDate = config.timesheetEndDate;
-  var endDate = new Date(timesheetEndDate.getFullYear(), timesheetEndDate.getMonth(), timesheetEndDate.getDay());
+  var endDate = new Date(timesheetEndDate.getFullYear(), timesheetEndDate.getMonth(), timesheetEndDate.getDate());
   Logger.log("end date: " + endDate);
   var until = Utilities.formatDate(endDate, timeZone, "yyyy-MM-dd");
   Logger.log("until: " + until);

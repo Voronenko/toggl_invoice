@@ -16,6 +16,7 @@ const Utilitiesmock = {
     return Buffer.from(value).toString('base64');
   },
   formatDate: function(someDate, timeZone="Europe/Helsinki", dateFormat="YYY-MM-DD") {
+    /*jshint strict: false */
     var targetDateFormat = dateFormat;
     switch (dateFormat) {
       case 'yyyy-MM-dd':
@@ -38,6 +39,7 @@ const Utilitiesmock = {
 
 const Loggermock = {
   log: function (p1, p2="", p3="", p4="", p5="", p6="", p7="", p8="", p9="", p10="") {
+    /*jshint strict: false */
     console.log(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10);
   }
 };

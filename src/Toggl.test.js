@@ -1,4 +1,5 @@
 /*jshint esversion: 8 */
+/*jshint strict: false */
 import {
   getAuth,
   SheetProvider
@@ -42,7 +43,6 @@ describe('Toggl Api works', () => {
 //   });
 
   test("Project entries based on date period can be retrieved", async () => {
-    "use strict";
     var auth = await getAuth();
     var sheetProvider = new SheetProvider(auth, sheetId);
     var workspaceId = await sheetProvider.getWorkspaceID();
