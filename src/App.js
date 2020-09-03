@@ -2,7 +2,6 @@
 /*jshint camelcase: false */
 import {
   fetchProjects,
-  fetchDetailsReport,
   fetchProjectTimesheet
 } from './Toggl.js';
 
@@ -129,7 +128,11 @@ function month_invoice(config) {
   var sheetName = getSheetName(startDate, endDate, timeZone, config.project);
   return {
     timesheet: timesheet,
-    sheetName: sheetName
+    sheetName: sheetName,
+    since: since,
+    until: until,
+    project: config.project,
+    ignoreTags: ignoreTags
   };
 }
 
@@ -160,7 +163,11 @@ async function range_invoice(config) {
 
   return {
     timesheet: timesheet,
-    sheetName: sheetName
+    sheetName: sheetName,
+    since: since,
+    until: until,
+    project: config.project,
+    ignoreTags: ignoreTags
   };
 }
 

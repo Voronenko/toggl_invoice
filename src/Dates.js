@@ -14,14 +14,6 @@ function getPreviousMonday(d) {
   return getMonday(pd);
 }
 
-function getPreviousMonday2(cd) {
-  "use strict";
-  var d = new Date(cd);
-  var pd = new Date(d.getTime() - 14 * (24 * 3600 * 1000));
-  return getMonday(pd);
-}
-
-
 function daysOfMonth(year, month) {
   "use strict";
   return new Date(year, month + 1, 0).getDate();
