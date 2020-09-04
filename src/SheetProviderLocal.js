@@ -33,7 +33,7 @@ async function getAuth() {
 
 function SheetProvider(auth, spreadSheetId) {
   "use strict";
-  var that = this;
+  const that = this;
 
   this.defaultSheetName = "Config";
   this.startPosition = "";
@@ -119,7 +119,7 @@ function SheetProvider(auth, spreadSheetId) {
   };
 
   this.getRange = function(col, row) {
-     var setterObj = new SheetProvider(that.auth);
+     const setterObj = new SheetProvider(that.auth);
      setterObj.setRange(col, row);
      setterObj.setSpreadSheetId(that.spreadSheetId);
      return setterObj;
@@ -131,7 +131,7 @@ function SheetProvider(auth, spreadSheetId) {
   };
 
   this.getCell = async function (range) {
-      var sheets = google.sheets({
+      const sheets = google.sheets({
         version: 'v4',
         auth: that.auth
       });
@@ -149,7 +149,7 @@ function SheetProvider(auth, spreadSheetId) {
 
   this.setValue = async function(value) {
 
-    var sheets = google.sheets({
+    const sheets = google.sheets({
       version: 'v4',
       auth: that.auth
     });

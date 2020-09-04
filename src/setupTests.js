@@ -17,7 +17,7 @@ const Utilitiesmock = {
   },
   formatDate: function(someDate, timeZone="Europe/Helsinki", dateFormat="YYY-MM-DD") {
     /*jshint strict: false */
-    var targetDateFormat = dateFormat;
+    let targetDateFormat = dateFormat;
     switch (dateFormat) {
       case 'yyyy-MM-dd':
          targetDateFormat = 'YYYY-MM-DD';
@@ -47,8 +47,8 @@ const Loggermock = {
 const UrlFetchAppmock = {
   fetch: function(url, params) {
     "use strict";
-    var response = syncrequest('GET', url, params);
-    var body = response.getBody('utf8');
+    const response = syncrequest('GET', url, params);
+    const body = response.getBody('utf8');
     return {
       getContentText: function() {
          return body;
@@ -65,7 +65,7 @@ const SessionMock = {
 };
 
 const auth = getAuth();
-var SpreadsheetAppMock = new SheetProvider(auth);
+const SpreadsheetAppMock = new SheetProvider(auth);
 SpreadsheetAppMock.setSpreadSheetId(sheetId);
 
 global.Utilities = Utilitiesmock;

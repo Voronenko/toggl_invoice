@@ -1,12 +1,12 @@
 /*jshint esversion: 8 */
 /*jshint unused:false*/
-var SHT_CONFIG = 'Config';
+const SHT_CONFIG = 'Config';
 
 // Custom menu
 function onOpen() {
   "use strict";
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var menuEntries = [
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const menuEntries = [
      {name: "Get Invoice for Month", functionName: "month_invoice"},
      {name: "Get Invoice for Range", functionName: "range_invoice"},
      {name: "-----Configure:-----", functionName: "do_nothing"},
@@ -29,13 +29,13 @@ function loadConfiguration(wb, configSheet) {
 
   Logger.log("Loading configuration ...");
 
-  var configsheet = wb.getSheetByName(configSheet);
-  var result = [];
+  const configsheet = wb.getSheetByName(configSheet);
+  let result = [];
 
-  var cfgdata = configsheet.getDataRange().getValues();
-  for (var i = 1; i < cfgdata.length; i++) {
-    var key = cfgdata[i][0];
-    var value = cfgdata[i][1];
+  const cfgdata = configsheet.getDataRange().getValues();
+  for (let i = 1; i < cfgdata.length; i++) {
+    let key = cfgdata[i][0];
+    let value = cfgdata[i][1];
 
     Logger.log("key: " + key + " - value: " + value);
 
@@ -47,21 +47,21 @@ function loadConfiguration(wb, configSheet) {
 
 function month_invoice() {
   "use strict";
-  var config = loadConfiguration(SpreadsheetApp.getActive(), SHT_CONFIG);
-  var result = app.month_invoice(config);
+  const config = loadConfiguration(SpreadsheetApp.getActive(), SHT_CONFIG);
+  const result = app.month_invoice(config);
   app.createTimesheet(result.sheetName, result.timesheet);
 }
 
 async function range_invoice() {
   "use strict";
-  var config = loadConfiguration(SpreadsheetApp.getActive(), SHT_CONFIG);
-  var result = await app.range_invoice(config);
+  const config = loadConfiguration(SpreadsheetApp.getActive(), SHT_CONFIG);
+  const result = await app.range_invoice(config);
   app.createTimesheet(result.sheetName, result.timesheet);
 }
 
 function load_projects() {
   "use strict";
-  var config = loadConfiguration(SpreadsheetApp.getActive(), SHT_CONFIG);
+  const config = loadConfiguration(SpreadsheetApp.getActive(), SHT_CONFIG);
   app.load_projects(config);
 }
 

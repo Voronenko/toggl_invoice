@@ -38,16 +38,16 @@ describe('Menu report actions', () => {
 
 
     test("range_invoice works over month", async () => {
-        var auth = await getAuth();
+        const auth = await getAuth();
         global.SpreadsheetApp.setAuth(auth);
-        var sheetProvider = new SheetProvider(auth, spreadsheetId);
+        const sheetProvider = new SheetProvider(auth, spreadsheetId);
 
-        var config = await sheetProvider.loadConfiguration();
+        const config = await sheetProvider.loadConfiguration();
         config.project = "toggltest";
         config.timesheetStartDate = new Date("2020-09-01");
         config.timesheetEndDate = new Date("2020-09-30");
 
-        var projectEntries = await range_invoice(config);
+        const projectEntries = await range_invoice(config);
         let data = JSON.stringify(projectEntries);
         fs.writeFileSync('z-rangeinvoice-toggltest-entries-sep1-sep30.json', data);
         expect(projectEntries.sheetName).toEqual("toggltest202009");
@@ -58,16 +58,16 @@ describe('Menu report actions', () => {
 
 
     test("month_invoice works over any end date", async () => {
-      var auth = await getAuth();
+      const auth = await getAuth();
       global.SpreadsheetApp.setAuth(auth);
-      var sheetProvider = new SheetProvider(auth, spreadsheetId);
+      const sheetProvider = new SheetProvider(auth, spreadsheetId);
 
-      var config = await sheetProvider.loadConfiguration();
+      const config = await sheetProvider.loadConfiguration();
       config.project = "toggltest";
       config.timesheetStartDate = new Date("2020-09-01");
       config.timesheetEndDate = new Date("2020-10-30");
 
-      var projectEntries = await month_invoice(config);
+      const projectEntries = await month_invoice(config);
       let data = JSON.stringify(projectEntries);
       fs.writeFileSync('z-monthinvoice-toggltest-entries-sep1-oct30.json', data);
       expect(projectEntries.sheetName).toEqual("toggltest202009");

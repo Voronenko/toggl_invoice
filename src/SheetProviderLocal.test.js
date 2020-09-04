@@ -16,51 +16,51 @@ describe('Config pane', () => {
 
 
       test("WorkspaceID is specified", async () => {
-        var auth = await getAuth();
-        var sheetProvider = new SheetProvider(auth, sheetId);
-        var workspaceID = sheetProvider.getWorkspaceID(sheetId);
+        const auth = await getAuth();
+        const sheetProvider = new SheetProvider(auth, sheetId);
+        const workspaceID = sheetProvider.getWorkspaceID(sheetId);
         expect(workspaceID).resolves.toEqual("1162029");
       });
 
       test("Toggl token is specified", async () => {
-        var auth = await getAuth();
-        var sheetProvider = new SheetProvider(auth, sheetId);
-        var cell = await sheetProvider.getTogglToken();
+        const auth = await getAuth();
+        const sheetProvider = new SheetProvider(auth, sheetId);
+        const cell = await sheetProvider.getTogglToken();
         expect(cell).toBeTruthy();
       });
 
       test("Start date is specified", async () => {
-        var auth = await getAuth();
-        var sheetProvider = new SheetProvider(auth, sheetId);
-        var value = sheetProvider.getStartDate();
+        const auth = await getAuth();
+        const sheetProvider = new SheetProvider(auth, sheetId);
+        const value = sheetProvider.getStartDate();
         expect(value).resolves.toBeTruthy();
       });
 
       test("End date is specified", async () => {
-        var auth = await getAuth();
-        var sheetProvider = new SheetProvider(auth, sheetId);
-        var value = sheetProvider.getEndDate();
+        const auth = await getAuth();
+        const sheetProvider = new SheetProvider(auth, sheetId);
+        const value = sheetProvider.getEndDate();
         expect(value).resolves.toBeTruthy();
       });
 
       test("Project is specified", async () => {
-        var auth = await getAuth();
-        var sheetProvider = new SheetProvider(auth, sheetId);
-        var value = sheetProvider.getProject();
+        const auth = await getAuth();
+        const sheetProvider = new SheetProvider(auth, sheetId);
+        const value = sheetProvider.getProject();
         expect(value).resolves.toBeTruthy();
       });
 
       test("Ignore tags are specified", async () => {
-        var auth = await getAuth();
-        var sheetProvider = new SheetProvider(auth, sheetId);
-        var value = sheetProvider.getIgnoreTags();
+        const auth = await getAuth();
+        const sheetProvider = new SheetProvider(auth, sheetId);
+        const value = sheetProvider.getIgnoreTags();
         expect(value).resolves.toEqual("pomidoro-break, sync1, standup1");
       });
 
       test("Configuration can be read as a whole", async () => {
-        var auth = await getAuth();
-        var sheetProvider = new SheetProvider(auth, sheetId);
-        var value = await sheetProvider.loadConfiguration();
+        const auth = await getAuth();
+        const sheetProvider = new SheetProvider(auth, sheetId);
+        const value = await sheetProvider.loadConfiguration();
         expect(value.apiToken).toBeTruthy();
         expect(value.ignoreTags).toEqual("pomidoro-break, sync1, standup1");
         expect(value.project).toBeTruthy();

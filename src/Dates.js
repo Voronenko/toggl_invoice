@@ -21,7 +21,7 @@ function daysOfMonth(year, month) {
 
 function millisToDuration(millis) {
   "use strict";
-  var t = new Date(1970, 0, 1);
+  let t = new Date(1970, 0, 1);
   t.setMilliseconds(millis);
   return t.toTimeString().substr(0, 8);
 }
@@ -34,14 +34,14 @@ function millisToDecimalHours(millis) {
 function parseISODateTime(isoDateTime) {
   "use strict";
   try {
-    var aDate = new Date();
-    var regexp = "([0-9]{4})(-([0-9]{2})(-([0-9]{2})" +
+    const aDate = new Date();
+    const regexp = "([0-9]{4})(-([0-9]{2})(-([0-9]{2})" +
       "(T([0-9]{2}):([0-9]{2})(:([0-9]{2})(\.([0-9]+))?)?" +
       "(Z|(([-+])([0-9]{2}):([0-9]{2})))?)?)?)?";
-    var d = isoDateTime.match(new RegExp(regexp));
+    const d = isoDateTime.match(new RegExp(regexp));
 
-    var offset = 0;
-    var date = new Date(d[1], 0, 1);
+    let offset = 0;
+    const date = new Date(d[1], 0, 1);
 
     if (d[3]) {
       date.setMonth(d[3] - 1);
@@ -67,7 +67,7 @@ function parseISODateTime(isoDateTime) {
     }
 
     offset = offset - date.getTimezoneOffset();
-    var time = (Number(date) + (offset * 60 * 1000));
+    const time = (Number(date) + (offset * 60 * 1000));
     aDate.setTime(Number(time));
     return aDate;
   } catch (e) {
