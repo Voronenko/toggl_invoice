@@ -7,3 +7,5 @@ token.json
 .env
 demo/*
 !demo/.clasp.json
+.idea
+.vscode

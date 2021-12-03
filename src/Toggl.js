@@ -5,7 +5,7 @@ function fetchDetailsReport(apiToken, workspaceId, since, until, page) {
   const usernamePassword = apiToken + ":api_token";
   const digest = "Basic " + Utilities.base64Encode(usernamePassword);
 
-  const url = "https://www.toggl.com/reports/api/v2/details";
+  const url = "https://api.track.toggl.com/reports/api/v2/details";
   let queryString = "workspace_id=" + workspaceId + "&user_agent=TogglePersonalExporter" + "&since=" + since + "&until=" + until;
   if (page) {
     queryString = queryString + "&page=" + page;
@@ -29,7 +29,7 @@ function fetchProjects(apiToken, workspaceId) {
 
   Logger.log("Digest: " + digest);
 
-  const url = "https://www.toggl.com/api/v8/workspaces/" + workspaceId + "/projects";
+  const url = "https://api.track.toggl.com/api/v8/workspaces/" + workspaceId + "/projects";
   const queryString = "";
   const response = UrlFetchApp.fetch(url + "?" + queryString, {
     method: "get",

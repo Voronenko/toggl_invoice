@@ -15,3 +15,6 @@ deploy:
 deploy-demo:
 	cp -r dist/* demo
 	cd demo && ../node_modules/.bin/clasp push
+
+test-prod:
+	jest --runInBand Prod.test.js

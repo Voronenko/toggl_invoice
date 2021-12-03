@@ -140,6 +140,28 @@ or run all pack via
 npm test
 ```
 
+## Perks
+
+If you would tag your log entries with Jira tickets in form [ZZZ-123], where ZZZ your project code and 123 ticket number, you can
+
+Filter any log entries related to ZZZ tickets
+
+```
+=sum(filter(C2:C30, regexmatch(B2:B30, "\[PULS-[0-9]+\]")))
+```
+
+Filter any log entries related to concrete ZZZ-897 ticket
+
+```
+=sum(filter(C2:C30, regexmatch(B2:B30, "\[PULS-897\]")))
+```
+
+and, thus, records without [ZZZ-xxx] prefix are supposed to be uncategorized, but billed activities
+
+```
+=sum(filter(C2:C30, NOT(regexmatch(B2:B30, "\[ZZZ-[0-9]+\]"))))
+```
+
 ## Acknowledgment
 Credits go to [thinkinglabs](https://github.com/thinkinglabs/toggl-google-sheet/) which provided an example on how to use the Toggl API with Google Sheet.
 
